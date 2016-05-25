@@ -6,7 +6,15 @@
 </head>
 <body ng-app='SlatedSearchbox'>
   <div ng-controller="SearchCtrl as search">
-  {{ search.message }}
+    <form>
+      <input type="text"
+             ng-model="search.term"
+             ng-model-options="{ debounce: 500 }"
+             ng-change="search.updateResults()"
+      />
+      <button>Submit</button>
+    </form>
+
   </div>
   <script src="./app.js"></script>
 </body>
