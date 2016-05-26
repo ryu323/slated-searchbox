@@ -2,21 +2,31 @@
 <html>
 <head>
   <title>Slated Search</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.10/angular.min.js"></script>
+  <link href="./styles.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.10/angular.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.10/angular-animate.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.10/angular-aria.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.9/angular-material.js"></script>
+  <script src="https://cdn.jsdelivr.net/lodash/4.13.1/lodash.min.js"></script>
 </head>
 <body ng-app="SlatedSearchbox">
   <div ng-controller="SearchCtrl as search">
-    <form>
-      <input type="text"
-             list="results"
-             ng-model="search.term"
-
-             ng-change="search.updateResults(search.term)"
-      />
-      <ul ng-show="search.resultsFetched">
-        <li ng-repeat="result in search.results"><span ng-bind-html="result.image | sanitize"></span>{{result.value}}</li>
-      </ul>
-    </form>
+    <md-content>
+      <form>
+        <md-autocomplete md-items="item in search.updateResults(search.searchText)"
+                         md-item-text="item.value"
+                         md-search-text="search.searchText"
+                         md-selected-item="search.selectedItem"
+                         md-min-length="3"
+                         placeholder="Search here:">
+          <md-item-template md-highlight-text="search.searchText" height="100px">
+            <span ng-bind-html="item.image_code | safe"></span>
+            <span class="value">{{ item.value }}</span>
+          </md-item-template>
+        </md-autocomplete>
+      </form>
+    </md-content>
 
   </div>
   <script src="./app.js"></script>

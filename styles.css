@@ -1,0 +1,7 @@
+.md-autocomplete-suggestions li {
+    height: 55px !important;
+}
+
+.value {
+  padding: 0 10px;
+}

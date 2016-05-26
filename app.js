@@ -1,44 +1,29 @@
-var App = angular.module('SlatedSearchbox', []);
+var App = angular.module('SlatedSearchbox', ['ngMaterial']);
 
 App.controller('SearchCtrl', SearchCtrl);
 App.factory('searchFactory', searchFactory);
-App.filter('sanitize', sanitize);
+App.filter('safe', safe);
 
 
 function SearchCtrl(searchFactory) {
 
   var vm = this;
-  vm.term = '';
-  vm.resultsFetched = false;
-  vm.results = [];
 
   vm.updateResults = function(term) {
-    vm.resultsFetched = false;
-    // only search after user types in at least 3 values
-    if (term.length > 2) {
-      vm.results = [];
-      searchFactory.getResults(term, function(response) {
-        response.forEach(function(item) {
-          var result = {
-            image: item.image_code,
-            value: item.value
-          }
-          vm.results.push(result);
-        });
-      });
-      vm.resultsFetched = true;
-    }
+    return searchFactory.getResults(term).then(function(response) {
+      return response;
+    });
   }
 
 }
 
 function searchFactory($http) {
 
-  var getResults = function(term, callback) {
+  var getResults = function(term) {
     var url = 'http://www.slated.com/films/autocomplete/profiles/?term=' + term + '&callback=JSON_CALLBACK';
-    $http.jsonp(url).success(function(response) {
-      callback(response);
-    })
+    return $http.jsonp(url).then(function(response) {
+      return response.data;
+    });
   }
 
   return {
@@ -47,6 +32,6 @@ function searchFactory($http) {
 
 }
 
-function sanitize($sce) {
+function safe($sce) {
   return $sce.trustAsHtml;
 }
