@@ -17,7 +17,7 @@ function SearchCtrl(searchFactory) {
 
 function searchFactory($http) {
   var getResults = function(term) {
-    var url = 'http://www.slated.com/films/autocomplete/profiles/?term=' + term + '&callback=JSON_CALLBACK';
+    var url = 'https://www.slated.com/films/autocomplete/profiles/?term=' + term + '&callback=JSON_CALLBACK';
     return $http.jsonp(url).then(function(response) {
       return response.data;
     });
