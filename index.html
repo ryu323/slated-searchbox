@@ -20,10 +20,13 @@
                          md-selected-item="search.selectedItem"
                          md-min-length="3"
                          placeholder="Search here:">
-          <md-item-template md-highlight-text="search.searchText" height="100px">
+          <md-item-template md-highlight-text="search.searchText">
             <span ng-bind-html="item.image_code | safe"></span>
             <span class="value">{{ item.value }}</span>
           </md-item-template>
+          <md-not-found>
+            No results matching "{{ search.searchText }}" were found.
+          </md-not-found>
         </md-autocomplete>
       </form>
     </md-content>
