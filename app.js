@@ -6,7 +6,6 @@ App.filter('safe', safe);
 
 
 function SearchCtrl(searchFactory) {
-
   var vm = this;
 
   vm.updateResults = function(term) {
@@ -14,11 +13,9 @@ function SearchCtrl(searchFactory) {
       return response;
     });
   }
-
 }
 
 function searchFactory($http) {
-
   var getResults = function(term) {
     var url = 'http://www.slated.com/films/autocomplete/profiles/?term=' + term + '&callback=JSON_CALLBACK';
     return $http.jsonp(url).then(function(response) {
@@ -29,7 +26,6 @@ function searchFactory($http) {
   return {
     getResults: getResults
   }
-
 }
 
 function safe($sce) {
